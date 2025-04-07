@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confetti Store | Hair Accessories Collection">
+    <title>Confetti Store | Hair Accessories</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo-link">
+                <img src="images/logo.png" alt="Confetti Store Logo" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="man.html">For THEE MAN</a></li>
+                <li><a href="jeweluxe.html">Jeweluxe</a></li>
+                <li><a href="hair-accessories.html" class="active">Hair Accessories</a></li>
+                <li><a href="bag-essentials.html">Bag Essentials</a></li>
+            </ul>
+            <div class="hamburger">☰</div>
+        </nav>
+    </header>
+
+    <section class="category-hero">
+        <img src="images/hair-accessories/hair-accessories-hero.jpg" alt="Hair Accessories Hero">
+        <div class="hero-overlay">
+            <h1>Hair Accessories</h1>
+            <p>Stylish, fun hair accessories to make you feel like royalty!</p>
+            <a href="#products" class="btn primary-btn smooth-scroll">Shop Now</a>
+        </div>
+    </section>
+
+    <section class="slideshow">
+        <div class="slides">
+            <img src="images/hair-accessories/Scarves.png" alt="Scarves" class="active">
+            <img src="images/hair-accessories/bands.png" alt="Bands">
+            <img src="images/hair-accessories/combs.png" alt="Hair Clips">
+        </div>
+    </section>
+
+    <section class="pricing" id="products">
+        <div class="category">
+            <h2>Featured Items</h2>
+            <div class="product-grid">
+                <div class="item">
+                    <img src="images/hair-accessories/hair-claws.png" alt="Hair Claws">
+                    <div class="item-details">
+                        <p>Hair Claws</p>
+                        <p>UGX 10,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Hair Claws" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/hair-accessories/scranchies.png" alt="Scranchies">
+                    <div class="item-details">
+                        <p>Scrunchies</p>
+                        <p>UGX 5,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Scrunchies" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/hair-accessories/hair-bows.png" alt="Hair Bows">
+                    <div class="item-details">
+                        <p>Hair Bows</p>
+                        <p>UGX 10,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Hair Bows" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/hair-accessories/bands.png" alt="Hair Bands">
+                    <div class="item-details">
+                        <p>Hair Bands</p>
+                        <p>UGX 10,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Hair Bands" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/hair-accessories/bonnets.png" alt="Bonnets">
+                    <div class="item-details">
+                        <p>Bonnets</p>
+                        <p>UGX 15,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Bonnets" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/hair-accessories/Scarves.png" alt="Scarves">
+                    <div class="item-details">
+                        <p>Scarves</p>
+                        <p>UGX 10,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Scarves" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/hair-accessories/combs.png" alt="Set of Combs">
+                    <div class="item-details">
+                        <p>Set of Combs</p>
+                        <p>UGX 25,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Set of Combs" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/hair-accessories/hair-clips.png" alt="Hair Clips">
+                    <div class="item-details">
+                        <p>Hair Clips</p>
+                        <p>UGX 20,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Hair Clips" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Contact: +256-768-123-954 / +256-700-143-818 | <a href="mailto:confettiuganda@gmail.com">Email: confettiuganda@gmail.com</a> | © 2025 Confetti Store</p>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        document.querySelectorAll('.smooth-scroll').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slides img');
+        function showSlides() {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slideIndex = (slideIndex + 1) % slides.length;
+            slides[slideIndex].classList.add('active');
+        }
+        setInterval(showSlides, 3000);
+    </script>
+</body>
+</html>

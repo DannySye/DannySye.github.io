@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="E-Wear Store | Stylish Clothing & Jewelry">
-    <title>E-Wear Store | Home</title>
+    <meta name="description" content="Confetti Store | Celebrating African Radiance">
+    <title>Confetti Store | Home</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">E-Wear Store</div>
+            <a href="index.html" class="logo-link">
+                <img src="images/logo.png" alt="Confetti Store Logo" class="logo-img">
+            </a>
             <ul class="nav-links">
                 <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="man.html">For THEE MAN</a></li>
+                <li><a href="jeweluxe.html">Jeweluxe</a></li>
+                <li><a href="hair-accessories.html">Hair Accessories</a></li>
+                <li><a href="bag-essentials.html">Bag Essentials</a></li>
             </ul>
             <div class="hamburger">☰</div>
         </nav>
@@ -22,49 +28,56 @@
 
     <section class="hero">
         <div class="hero-content">
-            <h1>E-Wear Store</h1>
-            <p>Timeless Fashion, Modern Elegance</p>
-            <a href="pricing.html" class="btn primary-btn">Discover Our Prices</a>
+            <h1>Confetti Store</h1>
+            <p>Glamour at Your Convenience!</p>
+            <a href="#categories" class="btn primary-btn smooth-scroll">Explore Now</a>
         </div>
     </section>
 
     <section class="about">
-        <h2>Why Choose Us?</h2>
+        <h2>About Us</h2>
         <div class="about-content">
-            <img src="https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Stylish Outfit">
+            <img src="images/confetti.jpg" alt="African Radiance">
             <div class="about-text">
-                <p>At E-Wear Store, we blend contemporary style with timeless craftsmanship. Our curated collection of clothing and jewelry elevates your wardrobe with affordable luxury for every occasion.</p>
-                <a href="#pricing" class="btn secondary-btn">Explore Our Collection</a>
+                <p><strong>Confetti: Glamour at your Convenience! Celebrating One Year of Empowering African Radiance!</strong><br><br>
+                Explore our vibrant collection of jewelry, hair accessories, and must-haves, carefully curated to complement the natural beauty of the African man and woman. We believe that every young king and queen deserves to shine, and our pieces are designed to enhance, not hide their unique radiance.</p>
+                <a href="#categories" class="btn secondary-btn smooth-scroll">Shop Our Collection</a>
             </div>
         </div>
     </section>
 
-    <section class="features">
-        <h2>Our Promise</h2>
+    <section class="features" id="categories">
+        <h2>Collection Spotlight</h2>
         <div class="feature-grid">
             <div class="feature">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Quality Materials">
-                <h3>Quality Materials</h3>
-                <p>Crafted with premium fabrics and metals.</p>
-                <a href="pricing.html" class="btn tertiary-btn">Shop Quality</a>
+                <img src="images/men/men-home.jpeg" alt="The MAN">
+                <h3>For THEE MAN</h3>
+                <p>Men’s essentials curated to refine style and elevate presence.</p>
+                <a href="man.html" class="btn tertiary-btn">Shop Now</a>
             </div>
             <div class="feature">
-                <img src="https://images.unsplash.com/photo-1618359057154-b2aae4d1a980?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Affordable Luxury">
-                <h3>Affordable Luxury</h3>
-                <p>Elegance that fits your budget.</p>
-                <a href="pricing.html" class="btn tertiary-btn">Find Your Style</a>
+                <img src="images/jewllary/earigs.png" alt="Jeweluxe">
+                <h3>Jeweluxe</h3>
+                <p>Stunning jewelry to elevate your radiance.</p>
+                <a href="jeweluxe.html" class="btn tertiary-btn">Shop Now</a>
             </div>
             <div class="feature">
-                <img src="https://images.unsplash.com/photo-1591560483309-e2795b6a2d56?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Versatile Style">
-                <h3>Versatile Style</h3>
-                <p>From casual to couture, wear it your way.</p>
-                <a href="pricing.html" class="btn tertiary-btn">Browse Now</a>
+                <img src="images/hair-accessories/bands.png" alt="Hair Accessories">
+                <h3>Hair Accessories</h3>
+                <p>Enhance your crown with vibrant accessories.</p>
+                <a href="hair-accessories.html" class="btn tertiary-btn">Shop Now</a>
+            </div>
+            <div class="feature">
+                <img src="images/bags/wipes.png" alt="Bag Essentials">
+                <h3>Bag Essentials</h3>
+                <p>Must-haves for style and convenience.</p>
+                <a href="bag-essentials.html" class="btn tertiary-btn">Shop Now</a>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>Contact: <a href="mailto:info@ewearstore.com">info@ewearstore.com</a> | © 2025 E-Wear Store</p>
+        <p>Contact: +256-768-123-954 / +256-700-143-818 | <a href="mailto:confettiuganda@gmail.com">Email: confettiuganda@gmail.com</a> | © 2023-2025 Confetti Store</p>
     </footer>
 
     <script>
@@ -80,6 +93,14 @@
             } else {
                 navbar.classList.remove('scrolled');
             }
+        });
+        document.querySelectorAll('.smooth-scroll').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </body>

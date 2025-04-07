@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confetti Store | Bag Essentials Collection">
+    <title>Confetti Store | Bag Essentials</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo-link">
+                <img src="images/logo.png" alt="Confetti Store Logo" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="man.html">For THEE MAN</a></li>
+                <li><a href="jeweluxe.html">Jeweluxe</a></li>
+                <li><a href="hair-accessories.html">Hair Accessories</a></li>
+                <li><a href="bag-essentials.html" class="active">Bag Essentials</a></li>
+            </ul>
+            <div class="hamburger">☰</div>
+        </nav>
+    </header>
+
+    <section class="category-hero">
+        <img src="images/bags/bag-hero.jpg" alt="Bag Essentials Hero">
+        <div class="hero-overlay">
+            <h1>Bag Essentials</h1>
+            <p>Stay confident and organized with our curated girl essentials collection.</p>
+            <a href="#products" class="btn primary-btn smooth-scroll">Shop Now</a>
+        </div>
+    </section>
+
+    <section class="slideshow">
+        <div class="slides">
+            <img src="images/bags/sunglassess.png" alt="Sun Glasses" class="active">
+            <img src="images/bags/wallets.png" alt="Wallets">
+            <img src="images/bags/wipes.png" alt="Wipes">
+        </div>
+    </section>
+
+    <section class="pricing" id="products">
+        <div class="category">
+            <h2>Featured Items</h2>
+            <div class="product-grid">
+                <div class="item">
+                    <img src="images/bags/wallets.png" alt="Wallets">
+                    <div class="item-details">
+                        <p>Wallets</p>
+                        <p>UGX 30,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Wallets" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/bags/lipgloss.png" alt="Lip Gloss & Vaseline">
+                    <div class="item-details">
+                        <p>Lip Gloss & Vaseline</p>
+                        <p>UGX 30,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Clutch Bag" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/bags/hand-sanitizer.png" alt="Hand Sanitizer & Lotion">
+                    <div class="item-details">
+                        <p>Hand Sanitizer & Lotion</p>
+                        <p>UGX 25,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Hand Sanitizer & Lotion" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/bags/sunglassess.png" alt="Sunglasses /Photochromatic Glasses">
+                    <div class="item-details">
+                        <p>Sun /Photochromatic Glasses</p>
+                        <p>UGX 30,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Sunglasses /Photochromatic Glasses" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/bags/lipstick.png" alt="Lip Stick & Liner">
+                    <div class="item-details">
+                        <p>Lip Stick & Liner</p>
+                        <p>UGX 20,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Lip Stick & Liner" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/bags/wipes.png" alt="Wipes">
+                    <div class="item-details">
+                        <p>Wipes</p>
+                        <p>UGX 5,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Wipes" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/bags/portablefuns.jpeg" alt="Portable Fans">
+                    <div class="item-details">
+                        <p>Portable Fans</p>
+                        <p>UGX 20,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Portable Fans" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/bags/perfume-oils.png" alt="Perfume Oils">
+                    <div class="item-details">
+                        <p>Perfume Oils</p>
+                        <p>UGX 10,000</p>
+                        <a href="https://wa.me/256700143818?text=I’d like to order the Perfume Oils" class="btn tertiary-btn" target="_blank">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Contact: +256-768-123-954 / +256-700-143-818 | <a href="mailto:confettiuganda@gmail.com">Email: confettiuganda@gmail.com</a> | © 2025 Confetti Store</p>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        document.querySelectorAll('.smooth-scroll').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slides img');
+        function showSlides() {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slideIndex = (slideIndex + 1) % slides.length;
+            slides[slideIndex].classList.add('active');
+        }
+        setInterval(showSlides, 3000);
+    </script>
+</body>
+</html>
