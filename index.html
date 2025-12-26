@@ -1,255 +1,581 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eiraka Ryaitu - Home</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    .carousel-inner {
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .carousel-item img {
-      object-fit: cover;
-      height: 300px;
-      width: 100%;
-    }
-    .category-section {
-      background-color: #e6f3ff;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 10px;
-    }
-    .section-title {
-      color: #1e3a8a;
-    }
-    .description-text {
-      text-align: justify;
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #ffffff;
-      border-radius: 10px;
-    }
-    .fireplace-intro {
-      background-color: #e6f3ff;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 10px;
-    }
-    .contact-section {
-      background-color: #e6f3ff;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudCommet | Architecting the Future</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel (to parse JSX in the browser) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Tailwind Config for CloudCommet Colors -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            950: '#020617', // Darker background
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ea580c;
+        }
+    </style>
 </head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark py-3 fixed-top">
-    <div class="container text-center">
-      <a class="navbar-brand" href="index.html">
-        <img src="assets/images/eiraka-logo.png" alt="Eiraka Ryaitu Logo" class="img-fluid">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="fireplace/index.html">Fireplace Conversations</a></li>
-          <li class="nav-item"><a class="nav-link" href="governance/index.html">Governance</a></li>
-          <li class="nav-item"><a class="nav-link" href="health/index.html">Health</a></li>
-          <li class="nav-item"><a class="nav-link" href="environment/index.html">Environment</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="section" style="background-color: #ffffff;">
-    <div class="container">
-      <div class="description-text animate__animated animate__fadeInUp">
-        <h3 class="section-title">About Eiraka Ryaitu</h3>
-        <p>Eiraka Ryaitu (Our Voice) is a multimedia platform owned by Eryaitu Media (U) Limited, located in Bushenyi-Ishaka Municipality, Bushenyi District, Southwestern Part of Uganda.</p>
-        <p>We document and tell stories of sustainable living from people in communities of Greater Bushenyi and Southwestern Uganda. Our areas of interest are GOVERNANCE, PUBLIC HEALTH, and ENVIRONMENT. We also mobilize local communities to participate in conversations about responsible living and sustainable development. We do this through organising weekly Eiraka Fireplace Conversations and podcasts that are shared in different formats for consumption by communities, including duty bearers.</p>
-      </div>
-      <div class="fireplace-intro animate__animated animate__fadeInUp">
-        <h2 class="section-title">Fireplace Conversations</h2>
-        <div id="fireplaceCarousel" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="fireplace/images/fireplace-1.jpg" alt="Fireplace Image 1">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Dialogue in Action</h5>
-              </div>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-200 transition-colors duration-300">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Icons (Inline SVGs to avoid dependencies) ---
+        const Icons = {
+            Cloud: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19c0-1.7-1.3-3-3-3h-1.1c-.1-2.9-2.4-5.2-5.3-5.2-2.2 0-4.1 1.3-4.9 3.2C1.4 14.5 1 15.8 1 17.2c0 3.2 2.6 5.8 5.8 5.8h10.7c2.5 0 4.5-2 4.5-4.5s-2-4.5-4.5-4.5Z"/></svg>,
+            Server: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>,
+            ShieldCheck: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>,
+            Terminal: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>,
+            Cpu: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>,
+            Globe: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>,
+            Moon: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>,
+            Sun: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41-1.41"/><path d="m19.07 4.93-1.41-1.41"/></svg>,
+            Menu: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>,
+            X: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>,
+            ArrowRight: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>,
+            PlayCircle: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>,
+            FileText: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>,
+            Code: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+            Mail: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>,
+            MapPin: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>,
+            Phone: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
+            Linkedin: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>,
+            Twitter: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>,
+            Github: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>,
+            CheckCircle2: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        };
+
+        // --- Shared Components ---
+
+        const Badge = ({ type }) => {
+            const styles = {
+                BLOG: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 border-blue-200 dark:border-blue-800",
+                VIDEO: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 border-red-200 dark:border-red-800",
+                NEWS: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300 border-orange-200 dark:border-orange-800",
+                TUTORIAL: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300 border-purple-200 dark:border-purple-800",
+            };
+            
+            return (
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider ${styles[type] || styles.BLOG}`}>
+                {type}
+                </span>
+            );
+        };
+
+        const SectionHeading = ({ title, subtitle, align = "center" }) => (
+            <div className={`mb-12 ${align === "center" ? "text-center" : "text-left"}`}>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-slate-100">
+                {title}
+                </h2>
+                <div className={`h-1 w-20 bg-orange-600 mb-4 rounded-full ${align === "center" ? "mx-auto" : ""}`}></div>
+                <p className="text-slate-600 dark:text-slate-400 max-w-2xl text-lg leading-relaxed mx-auto">
+                {subtitle}
+                </p>
             </div>
-            <div class="carousel-item">
-              <img src="fireplace/images/fireplace-2.jpg" alt="Fireplace Image 2">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Community Insights</h5>
-              </div>
+        );
+
+        const Button = ({ children, variant = "primary", onClick, className = "", icon }) => {
+            const baseStyle = "px-6 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2";
+            const variants = {
+                primary: "bg-orange-600 hover:bg-orange-700 text-white shadow-lg shadow-orange-600/20 hover:shadow-orange-600/40",
+                secondary: "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white",
+                outline: "border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white dark:border-orange-500 dark:text-orange-500 dark:hover:bg-orange-500 dark:hover:text-white"
+            };
+
+            const IconComponent = icon ? Icons[icon] : null;
+
+            return (
+                <button onClick={onClick} className={`${baseStyle} ${variants[variant]} ${className}`}>
+                {children}
+                {IconComponent && <IconComponent className="w-5 h-5" />}
+                </button>
+            );
+        };
+
+        // --- Pages ---
+
+        const HomePage = ({ navigate }) => (
+            <React.Fragment>
+                <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+                    <div className="absolute inset-0 z-0">
+                        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+                        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-orange-500 opacity-20 blur-[100px] dark:opacity-10"></div>
+                    </div>
+
+                    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-300 text-xs font-semibold uppercase tracking-wide mb-8 border border-orange-200 dark:border-orange-800">
+                        <span className="w-2 h-2 rounded-full bg-orange-600 animate-pulse"></span>
+                        CloudCommet Est. 2025
+                        </div>
+                        
+                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6">
+                        Architecting the Future of <br className="hidden md:block" />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-purple-600 dark:from-orange-400 dark:to-purple-500">
+                            Hybrid Cloud
+                        </span>
+                        </h1>
+                        
+                        <p className="mt-4 text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10">
+                        Expert DevOps solutions and technical training led by Daniel Mwiine. 
+                        Secure, scalable, and built for the next generation of infrastructure.
+                        </p>
+                        
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Button onClick={() => navigate('solutions')} icon="ArrowRight">
+                            Explore Solutions
+                        </Button>
+                        <Button variant="secondary" onClick={() => navigate('academy')}>
+                            View Academy
+                        </Button>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="py-20 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between items-end mb-12">
+                        <div className="max-w-2xl">
+                            <h2 className="text-3xl font-bold mb-4 text-slate-900 dark:text-slate-100">Core Capabilities</h2>
+                            <p className="text-slate-600 dark:text-slate-400">High-performance infrastructure for modern enterprises.</p>
+                        </div>
+                        <button onClick={() => navigate('solutions')} className="hidden md:flex items-center text-orange-600 font-semibold hover:text-orange-700">
+                            All Solutions <Icons.ArrowRight className="w-4 h-4 ml-2" />
+                        </button>
+                        </div>
+                        
+                        <div className="grid md:grid-cols-3 gap-8">
+                        {[
+                            { icon: "Cloud", title: "GCP Architecture", desc: "Native cloud implementations." },
+                            { icon: "Terminal", title: "DevOps & K8s", desc: "Automated pipelines & orchestration." },
+                            { icon: "Server", title: "Hybrid Systems", desc: "Bridging on-prem and cloud." }
+                        ].map((item, i) => (
+                            <div key={i} onClick={() => navigate('solutions')} className="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-orange-500/50 transition-all hover:shadow-lg">
+                            <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-lg flex items-center justify-center mb-4 text-orange-600">
+                                {Icons[item.icon] && React.createElement(Icons[item.icon], { className: "w-6 h-6" })}
+                            </div>
+                            <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-slate-100">{item.title}</h3>
+                            <p className="text-slate-600 dark:text-slate-400 text-sm">{item.desc}</p>
+                            </div>
+                        ))}
+                        </div>
+                    </div>
+                </section>
+            </React.Fragment>
+        );
+
+        const SolutionsPage = () => (
+            <div className="pt-32 pb-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <SectionHeading 
+                    title="Enterprise Solutions" 
+                    subtitle="We build resilient, scalable, and secure infrastructure tailored to your business needs."
+                />
+
+                <div className="grid gap-12 mt-16">
+                    <div className="grid md:grid-cols-2 gap-8 items-center bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div>
+                        <div className="w-14 h-14 bg-orange-100 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center mb-6 text-orange-600">
+                        <Icons.Cloud className="w-8 h-8" />
+                        </div>
+                        <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-slate-100">GCP Cloud Architecture</h3>
+                        <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                        Unlock the full potential of Google Cloud Platform. We specialize in designing serverless architectures, optimizing costs, and migrating legacy workloads with zero downtime.
+                        </p>
+                        <ul className="space-y-3 mb-8">
+                        {["Cloud Run & Cloud Functions", "Global Load Balancing", "IAM & Security Perimeter Design"].map((item, i) => (
+                            <li key={i} className="flex items-center text-sm text-slate-700 dark:text-slate-300">
+                            <Icons.CheckCircle2 className="w-5 h-5 text-orange-500 mr-3" /> {item}
+                            </li>
+                        ))}
+                        </ul>
+                        <Button variant="outline">Schedule Consultation</Button>
+                    </div>
+                    <div className="h-64 md:h-full bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <Icons.Globe className="w-32 h-32 text-slate-300 dark:text-slate-700" />
+                    </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-8 items-center bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm md:grid-flow-dense">
+                    <div className="md:col-start-2">
+                        <div className="w-14 h-14 bg-purple-100 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center mb-6 text-purple-600">
+                        <Icons.Terminal className="w-8 h-8" />
+                        </div>
+                        <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-slate-100">Kubernetes & DevOps</h3>
+                        <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                        Automate everything. From CI/CD pipelines to complex Kubernetes orchestration, we ensure your deployment process is robust, repeatable, and rapid.
+                        </p>
+                        <ul className="space-y-3 mb-8">
+                        {["GKE Autopilot Configuration", "ArgoCD & GitOps Workflows", "Infrastructure as Code (Terraform)"].map((item, i) => (
+                            <li key={i} className="flex items-center text-sm text-slate-700 dark:text-slate-300">
+                            <Icons.CheckCircle2 className="w-5 h-5 text-purple-500 mr-3" /> {item}
+                            </li>
+                        ))}
+                        </ul>
+                        <Button variant="outline">View Tech Stack</Button>
+                    </div>
+                    <div className="h-64 md:h-full bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center md:col-start-1">
+                        <Icons.Code className="w-32 h-32 text-slate-300 dark:text-slate-700" />
+                    </div>
+                    </div>
+                </div>
+                </div>
             </div>
-            <div class="carousel-item">
-              <img src="fireplace/images/fireplace-3.jpg" alt="Fireplace Image 3">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Storytelling for Change</h5>
-              </div>
+        );
+
+        const AcademyPage = () => {
+            const [filter, setFilter] = useState('ALL');
+            
+            const content = [
+                { type: 'BLOG', title: "Scaling GCP Clusters: A Deep Dive into Auto-scaling", date: "Dec 28, 2025", time: "8 min read" },
+                { type: 'VIDEO', title: "Kubernetes for Beginners: Pods vs Nodes", date: "Jan 02, 2026", time: "15 min watch" },
+                { type: 'NEWS', title: "CloudCommet Launches: Defining a New Era", date: "Dec 26, 2025", time: "2 min read" },
+                { type: 'TUTORIAL', title: "Setting up Terraform with GCP Workload Identity", date: "Jan 05, 2026", time: "12 min read" },
+                { type: 'BLOG', title: "Why Dark Mode First? Accessibility in 2026", date: "Jan 10, 2026", time: "5 min read" },
+                { type: 'VIDEO', title: "Live Coding: Building a Next.js 15 App", date: "Jan 12, 2026", time: "45 min watch" },
+            ];
+
+            const filteredContent = filter === 'ALL' ? content : content.filter(item => item.type === filter);
+
+            return (
+                <div className="pt-32 pb-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <SectionHeading 
+                    title="The Academy" 
+                    subtitle="Latest intel, tutorials, and industry insights from the CloudCommet engineering team."
+                    />
+
+                    <div className="flex flex-wrap justify-center gap-4 mb-12">
+                    {['ALL', 'BLOG', 'VIDEO', 'NEWS', 'TUTORIAL'].map((tab) => (
+                        <button
+                        key={tab}
+                        onClick={() => setFilter(tab)}
+                        className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                            filter === tab 
+                            ? "bg-orange-600 text-white shadow-lg shadow-orange-600/20" 
+                            : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700"
+                        }`}
+                        >
+                        {tab}
+                        </button>
+                    ))}
+                    </div>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {filteredContent.map((item, i) => (
+                        <div key={i} className="flex flex-col h-full bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-shadow duration-300 group">
+                        <div className="h-48 bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden">
+                            <div className="absolute inset-0 opacity-10 dark:opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-400 to-slate-900"></div>
+                            <div className="z-10 transform group-hover:scale-110 transition-transform duration-500">
+                            {item.type === 'VIDEO' ? <Icons.PlayCircle className="w-12 h-12 text-slate-400" /> : <Icons.FileText className="w-12 h-12 text-slate-400" />}
+                            </div>
+                        </div>
+                        <div className="p-6 flex flex-col flex-grow">
+                            <div className="flex justify-between items-center mb-3">
+                            <Badge type={item.type} />
+                            <span className="text-xs text-slate-500 font-mono">{item.date}</span>
+                            </div>
+                            <h3 className="text-lg font-bold mb-2 text-slate-900 dark:text-slate-100 line-clamp-2">
+                            {item.title}
+                            </h3>
+                            <div className="mt-auto pt-4 flex items-center text-sm text-slate-500 dark:text-slate-400">
+                            <span className="mr-4">{item.time}</span>
+                            <button className="text-orange-600 hover:text-orange-500 font-medium flex items-center ml-auto transition-colors">
+                                Read <Icons.ArrowRight className="w-4 h-4 ml-1" />
+                            </button>
+                            </div>
+                        </div>
+                        </div>
+                    ))}
+                    </div>
+                </div>
+                </div>
+            );
+        };
+
+        const AboutPage = () => (
+            <div className="pt-32 pb-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
+                    <div>
+                    <div className="inline-block px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-orange-600 dark:text-orange-400 text-sm font-mono mb-4">
+                        Founder & Principal Engineer
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">Daniel Mwiine</h2>
+                    <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed text-lg">
+                        Founded on December 26, 2025, CloudCommet represents the convergence of strict security standards and modern, fluid UI/UX design. 
+                    </p>
+                    <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed text-lg">
+                        With deep expertise in Accessibility (WCAG 2.1), React, and Cloud Infrastructure, Daniel leads the team with a "Code-First, Design-Driven" philosophy that refuses to compromise on performance.
+                    </p>
+                    
+                    <div className="flex gap-8">
+                        <div className="flex flex-col">
+                        <span className="text-4xl font-bold text-orange-600 dark:text-orange-500">5+</span>
+                        <span className="text-sm text-slate-500 font-semibold uppercase tracking-wide mt-1">Years Exp</span>
+                        </div>
+                        <div className="w-px bg-slate-200 dark:bg-slate-700 h-16"></div>
+                        <div className="flex flex-col">
+                        <span className="text-4xl font-bold text-orange-600 dark:text-orange-500">100%</span>
+                        <span className="text-sm text-slate-500 font-semibold uppercase tracking-wide mt-1">Uptime</span>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-4 mt-8">
+                        <a href="#" className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-500 transition-colors">
+                        <Icons.Linkedin className="w-6 h-6" />
+                        </a>
+                        <a href="#" className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-500 transition-colors">
+                        <Icons.Github className="w-6 h-6" />
+                        </a>
+                        <a href="#" className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-500 transition-colors">
+                        <Icons.Twitter className="w-6 h-6" />
+                        </a>
+                    </div>
+                    </div>
+                    
+                    <div className="flex justify-center relative">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-purple-500/20 rounded-full blur-[60px] transform rotate-12"></div>
+                        <div className="relative w-80 h-80 md:w-96 md:h-96">
+                        <div className="absolute inset-0 border-2 border-dashed border-orange-500/30 rounded-full animate-spin-slow"></div>
+                        <div className="absolute inset-4 border-2 border-slate-200 dark:border-slate-700 rounded-full"></div>
+                        <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-slate-900 rounded-full overflow-hidden border-8 border-white dark:border-slate-900 shadow-2xl">
+                            <Icons.ShieldCheck className="w-40 h-40 text-slate-300 dark:text-slate-700" />
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-slate-50 dark:bg-slate-900/50 rounded-3xl p-8 md:p-12 border border-slate-200 dark:border-slate-800">
+                    <h3 className="text-2xl font-bold mb-8 text-center text-slate-900 dark:text-slate-100">The CloudCommet Standard</h3>
+                    <div className="grid md:grid-cols-3 gap-8">
+                    {[
+                        { title: "Secure by Default", desc: "No open buckets. No weak ciphers. Security isn't an addon, it's the foundation." },
+                        { title: "WCAG 2.1 Compliant", desc: "Building a web that works for everyone. Accessibility is baked into our design system." },
+                        { title: "Dark Mode First", desc: "Designed for developer ergonomics. High contrast, reduced eye strain, modern aesthetic." }
+                    ].map((item, i) => (
+                        <div key={i} className="text-center">
+                        <h4 className="font-bold text-lg mb-3 text-slate-900 dark:text-slate-100">{item.title}</h4>
+                        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                        </div>
+                    ))}
+                    </div>
+                </div>
+                </div>
             </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#fireplaceCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#fireplaceCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-        <p>The mind of this space is to promote dialogue and encourage critical thinking and storytelling as drivers of social change in communities.</p>
-        <p>These conversations are interactive in nature, involving a moderator and guests/panellists. The audience has a chance to gain insights through the guest’s experience and thoughts on the subject.</p>
-        <p>This informal setting is designed to make everyone feel relaxed and yet leave with more information than they came in with. The topics discussed at Fireplace Conversations calm the feelings of the participants and lift their spirits as they slide into the weekend.</p>
-        <p>This way, participants benefit from sharing ideas, knowledge, and skills, and this helps society members have their leadership, sense of responsibility, and survival skill set boosted in different ways.</p>
-        <p>These interactions often come in question-and-answer formats, triggering the audience to think about the questions being asked to the guest as they (audience) also prepare to actively be part.</p>
-        <p>After hearing the panelists or guests break new ground within topics of the day, participants also share and express themselves on the topic before panelists are invited to give their concluding remarks as the night show is wound down.</p>
-        <p>The topics often discussed are drawn from areas of public health, environment, and governance, and each topic is tailored to provide solution(s) to a certain challenge.</p>
-        <p><a href="fireplace/index.html" style="color: #1e3a8a;">Explore more Fireplace Conversations</a></p>
-      </div>
-      <div class="fireplace-intro animate__animated animate__fadeInUp">
-        <h2 class="section-title">Governance</h2>
-        <div id="governanceCarousel" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://via.placeholder.com/800x300.png?text=Governance+1" alt="Governance Image 1">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Leadership in Dialogue</h5>
-              </div>
+        );
+
+        const ContactPage = () => (
+            <div className="pt-32 pb-20">
+                <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <SectionHeading 
+                    title="Get in Touch" 
+                    subtitle="Ready to modernize your infrastructure? Let's discuss your architecture."
+                />
+                
+                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                    <div className="p-8 md:p-10">
+                    <form className="space-y-6">
+                        <div className="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">First Name</label>
+                            <input type="text" className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all dark:text-white" placeholder="Jane" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Last Name</label>
+                            <input type="text" className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all dark:text-white" placeholder="Doe" />
+                        </div>
+                        </div>
+                        
+                        <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                        <input type="email" className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all dark:text-white" placeholder="jane@company.com" />
+                        </div>
+
+                        <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Message</label>
+                        <textarea rows="4" className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all dark:text-white" placeholder="Tell us about your project..."></textarea>
+                        </div>
+
+                        <Button className="w-full">Send Message</Button>
+                    </form>
+
+                    <div className="mt-10 pt-10 border-t border-slate-200 dark:border-slate-800 grid grid-cols-3 gap-4 text-center">
+                        <div className="flex flex-col items-center gap-2">
+                        <Icons.Mail className="w-5 h-5 text-orange-600" />
+                        <span className="text-xs text-slate-500">hello@cloudcommet.com</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                        <Icons.Phone className="w-5 h-5 text-orange-600" />
+                        <span className="text-xs text-slate-500">+1 (555) 000-0000</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                        <Icons.MapPin className="w-5 h-5 text-orange-600" />
+                        <span className="text-xs text-slate-500">Remote / Global</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
             </div>
-            <div class="carousel-item">
-              <img src="https://via.placeholder.com/800x300.png?text=Governance+2" alt="Governance Image 2">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Community Governance</h5>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="https://via.placeholder.com/800x300.png?text=Governance+3" alt="Governance Image 3">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Policy Solutions</h5>
-              </div>
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#governanceCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#governanceCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-        <p>Governance at Eiraka Ryaitu focuses on fostering inclusive decision-making through Fireplace Conversations, where local leaders and community members discuss policies impacting Greater Bushenyi.</p>
-        <p>These sessions encourage critical thinking about leadership roles, featuring moderators and guests who share insights on effective governance, inspiring participants to contribute solutions.</p>
-        <p>The relaxed environment promotes open dialogue, helping attendees leave with enhanced understanding of governance challenges and strategies for sustainable development.</p>
-        <p>Through interactive Q&A, participants explore questions on leadership and responsibility, boosting their skills to address community governance issues.</p>
-        <p>After guest discussions, the audience shares perspectives, leading to actionable insights as panelists conclude with tailored solutions for governance challenges.</p>
-        <p>Topics are drawn from real community needs, aiming to strengthen leadership and accountability in Southwestern Uganda.</p>
-        <p><a href="governance/index.html" style="color: #1e3a8a;">Explore more Governance</a></p>
-      </div>
-      <div class="fireplace-intro animate__animated animate__fadeInUp">
-        <h2 class="section-title">Health</h2>
-        <div id="healthCarousel" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://via.placeholder.com/800x300.png?text=Health+1" alt="Health Image 1">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Health Dialogue</h5>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="https://via.placeholder.com/800x300.png?text=Health+2" alt="Health Image 2">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Community Wellness</h5>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="https://via.placeholder.com/800x300.png?text=Health+3" alt="Health Image 3">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Healthcare Solutions</h5>
-              </div>
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#healthCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#healthCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-        <p>Health at Eiraka Ryaitu highlights community wellness through Fireplace Conversations, bringing together health experts and locals to address public health in Greater Bushenyi.</p>
-        <p>These interactive sessions feature moderators and guests sharing experiences on healthcare access, encouraging participants to think critically about health solutions.</p>
-        <p>The informal setting fosters a relaxed atmosphere, leaving attendees with practical knowledge to improve their well-being as they prepare for the weekend.</p>
-        <p>Through Q&A formats, participants engage with questions on health challenges, enhancing their ability to promote sustainable health practices.</p>
-        <p>After guest insights, the audience contributes ideas, leading to concluding remarks from panelists with tailored health strategies for Southwestern Uganda.</p>
-        <p>Topics focus on pressing health issues, aiming to empower communities with knowledge for better public health outcomes.</p>
-        <p><a href="health/index.html" style="color: #1e3a8a;">Explore more Health</a></p>
-      </div>
-      <div class="fireplace-intro animate__animated animate__fadeInUp">
-        <h2 class="section-title">Environment</h2>
-        <div id="environmentCarousel" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://via.placeholder.com/800x300.png?text=Environment+1" alt="Environment Image 1">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Environmental Dialogue</h5>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="https://via.placeholder.com/800x300.png?text=Environment+2" alt="Environment Image 2">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Sustainable Living</h5>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="https://via.placeholder.com/800x300.png?text=Environment+3" alt="Environment Image 3">
-              <div class="carousel-caption d-none d-md-block">
-                <h5 style="color: #1e3a8a;">Green Solutions</h5>
-              </div>
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#environmentCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#environmentCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-        <p>Environment at Eiraka Ryaitu promotes sustainable living through Fireplace Conversations, engaging community members and environmentalists from Greater Bushenyi.</p>
-        <p>These sessions include moderators and guests sharing insights on conservation, encouraging critical thinking about environmental challenges.</p>
-        <p>The relaxed setting inspires attendees to leave with actionable ideas for sustainable practices as they transition into the weekend.</p>
-        <p>Through interactive Q&A, participants explore questions on environmental responsibility, boosting their skills to support green initiatives.</p>
-        <p>After guest discussions, the audience shares perspectives, leading to concluding remarks from panelists with tailored solutions for environmental issues in Southwestern Uganda.</p>
-        <p>Topics address local environmental concerns, aiming to foster a culture of sustainability and responsibility.</p>
-        <p><a href="environment/index.html" style="color: #1e3a8a;">Explore more Environment</a></p>
-      </div>
-      <div class="contact-section animate__animated animate__fadeInUp">
-        <h2 class="section-title">Contact Us</h2>
-        <p>Get in touch with Eiraka Ryaitu to share your stories, join our conversations, or learn more about our initiatives.</p>
-        <p><strong>Address:</strong> Bushenyi-Ishaka Municipality, Bushenyi District, Southwestern Uganda</p>
-        <p><strong>Email:</strong> info@eirakaryaitu.org</p>
-        <p><strong>Phone:</strong> +256 123 456 789</p>
-        <p>We’d love to hear from you! Please reach out with any questions or collaboration ideas.</p>
-      </div>
-    </div>
-  </div>
-  <footer class="footer">
-    <div class="container">
-      <p style="color: #ffffff;">© 2025 Eiraka Ryaitu. All rights reserved. Established 2024 - 2025.</p>
-    </div>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        );
+
+        const App = () => {
+            const [darkMode, setDarkMode] = useState(true);
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const [activePage, setActivePage] = useState('home');
+
+            useEffect(() => {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme) {
+                    setDarkMode(savedTheme === 'dark');
+                } else {
+                    setDarkMode(true);
+                }
+            }, []);
+
+            useEffect(() => {
+                if (darkMode) {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                }
+            }, [darkMode]);
+
+            const toggleTheme = () => setDarkMode(!darkMode);
+
+            const navigateTo = (page) => {
+                setActivePage(page);
+                setIsMenuOpen(false);
+                window.scrollTo(0, 0);
+            };
+
+            const NavLink = ({ page, label }) => (
+                <li>
+                    <button 
+                        onClick={() => navigateTo(page)}
+                        className={`block py-2 px-3 rounded md:p-0 transition-colors ${
+                        activePage === page 
+                            ? "text-orange-600 font-bold dark:text-orange-400" 
+                            : "hover:text-orange-600 dark:hover:text-orange-400"
+                        }`}
+                    >
+                        {label}
+                    </button>
+                </li>
+            );
+
+            return (
+                <div className="flex flex-col min-h-screen">
+                    <nav className="fixed w-full z-50 top-0 start-0 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
+                        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-3">
+                        <button onClick={() => navigateTo('home')} className="flex items-center space-x-2 rtl:space-x-reverse">
+                            <div className="w-8 h-8 bg-gradient-to-tr from-orange-600 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-orange-600/20">
+                            <Icons.Cloud className="w-5 h-5 text-white" />
+                            </div>
+                            <span className="self-center text-xl font-bold whitespace-nowrap tracking-tight font-mono">
+                            CloudCommet
+                            </span>
+                        </button>
+                        
+                        <div className="flex md:order-2 space-x-3 md:space-x-4 rtl:space-x-reverse items-center">
+                            <button
+                            onClick={toggleTheme}
+                            className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-200 dark:focus:ring-slate-700 transition-colors"
+                            aria-label="Toggle Dark Mode"
+                            >
+                            {darkMode ? <Icons.Sun className="w-5 h-5" /> : <Icons.Moon className="w-5 h-5" />}
+                            </button>
+                            
+                            <button
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-slate-500 rounded-lg md:hidden hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-200 dark:focus:ring-slate-700"
+                            >
+                            {isMenuOpen ? <Icons.X className="w-5 h-5" /> : <Icons.Menu className="w-5 h-5" />}
+                            </button>
+                        </div>
+
+                        <div className={`${isMenuOpen ? 'block' : 'hidden'} items-center justify-between w-full md:flex md:w-auto md:order-1`}>
+                            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-slate-100 rounded-lg bg-slate-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-slate-800 md:dark:bg-transparent dark:border-slate-700">
+                            <NavLink page="home" label="Home" />
+                            <NavLink page="solutions" label="Solutions" />
+                            <NavLink page="academy" label="Academy" />
+                            <NavLink page="about" label="About" />
+                            <NavLink page="contact" label="Contact" />
+                            </ul>
+                        </div>
+                        </div>
+                    </nav>
+
+                    <main className="flex-grow">
+                        {activePage === 'home' && <HomePage navigate={navigateTo} />}
+                        {activePage === 'solutions' && <SolutionsPage />}
+                        {activePage === 'academy' && <AcademyPage />}
+                        {activePage === 'about' && <AboutPage />}
+                        {activePage === 'contact' && <ContactPage />}
+                    </main>
+
+                    <footer className="py-8 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 mt-auto">
+                        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500 dark:text-slate-400">
+                        <div className="mb-4 md:mb-0 flex items-center gap-2">
+                            <Icons.Cloud className="w-4 h-4 text-orange-600" />
+                            <span className="font-semibold text-slate-900 dark:text-slate-200">CloudCommet</span>
+                        </div>
+                        <div className="flex gap-6 mb-4 md:mb-0">
+                            <a href="#" className="hover:text-orange-600 transition-colors">Privacy</a>
+                            <a href="#" className="hover:text-orange-600 transition-colors">Terms</a>
+                            <a href="#" className="hover:text-orange-600 transition-colors">Sitemap</a>
+                        </div>
+                        <div>
+                            &copy; 2025 Daniel Mwiine. All rights reserved.
+                        </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
